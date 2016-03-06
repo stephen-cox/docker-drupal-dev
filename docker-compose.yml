@@ -3,14 +3,14 @@ web:
   hostname: drupal
   links:
     - db:mysql
-    - mailhog:mail
+    - mailcatcher
   ports:
     - "80:80"
     - "2222:22"
   volumes:
     - ./databases:/docker/databases
     - ./sites:/docker/sites
-    - ./sites/oxme:/var/www/
+    - ./sites/${SITE}:/var/www/
 
 db:
   build: containers/mysql
@@ -30,9 +30,9 @@ adminer:
   ports:
     - "8081:80"
 
-mailhog:
-  image: mailhog/mailhog
-  hostname: mailhog
+mailcatcher:
+  image: schickling/mailcatcher
+  hostname: mailcatcher
   ports:
     - "1025:1025"
-    - "8085:8085"
+    - "8082:1080"
