@@ -1,0 +1,38 @@
+web:
+  build: containers/drupal
+  hostname: drupal
+  links:
+    - db:mysql
+    - mailhog:mail
+  ports:
+    - "80:80"
+    - "2222:22"
+  volumes:
+    - ./databases:/docker/databases
+    - ./sites:/docker/sites
+    - ./sites/oxme:/var/www/
+
+db:
+  build: containers/mysql
+  hostname: mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+  ports:
+    - "3306:3306"
+  volumes:
+    - /var/lib/mysql  
+
+adminer:
+  image: clue/adminer
+  hostname: adminer
+  links:
+    - db:mysql
+  ports:
+    - "8081:80"
+
+mailhog:
+  image: mailhog/mailhog
+  hostname: mailhog
+  ports:
+    - "1025:1025"
+    - "8085:8085"
