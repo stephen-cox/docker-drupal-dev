@@ -6,12 +6,8 @@ web:
     - mailcatcher
   ports:
     - "80:80"
-    - "2222:22"
   volumes:
-    - ./databases:/docker/databases
-    - ./sites:/docker/sites
     - ./sites/${SITE}:/var/www/
-
 db:
   build: containers/mysql
   hostname: mysql
@@ -36,3 +32,18 @@ mailcatcher:
   ports:
     - "1025:1025"
     - "8082:1080"
+
+dev_tools:
+  build: containers/dev_tools
+  hostname: dev-tools
+  links:
+    - db:mysql
+    - mailcatcher
+    - web
+  ports:
+    - "2222:22"
+  volumes:
+    - /home/docker
+    - ./databases:/docker/databases
+    - ./sites:/docker/sites
+    - ./sites/${SITE}:/var/www/
