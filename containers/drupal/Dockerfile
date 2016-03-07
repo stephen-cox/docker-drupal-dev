@@ -12,10 +12,13 @@ RUN apt-get update && \
 	    mailutils \
 	    mysql-client \
 	    openssh-server \
-	    php5-cli \
-	    php5-mysql \
 	    php5-gd \
+	    php5-cli \
 	    php5-curl \
+	    php5-imagick \
+	    php5-imap \
+	    php5-mcrypt \
+	    php5-mysql \
 	    php5-xdebug \
 	    ssmtp && \
 	apt-get clean
@@ -41,6 +44,7 @@ RUN usermod -aG docker www-data && \
 
 # Configure PHP
 COPY config/php5/local.ini /etc/php5/apache2/conf.d/00-local.ini
+COPY config/php5/xdebug.ini /etc/php5/apache2/conf.d/20-xdebug.ini
 
 # Configure SSMTP
 COPY config/ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf

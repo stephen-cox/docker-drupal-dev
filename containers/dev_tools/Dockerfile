@@ -25,6 +25,10 @@ RUN useradd -m -s /bin/bash -G sudo -p docker docker && \
     mkdir -p "/home/docker/.ssh" && \
     printf "docker ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers.d/docker
 COPY config/docker.ssh.pub /home/docker/.ssh/authorized_keys
+RUN chown -R docker:docker /home/docker && \
+    chmod 755 /home/docker && \
+    chmod 700 /home/docker/.ssh && \
+    chmod 600 /home/docker/.ssh/authorized_keys
 
 # Install Composer
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php && \
