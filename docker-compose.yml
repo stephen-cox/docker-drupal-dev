@@ -8,6 +8,7 @@ web:
     - "80:80"
   volumes:
     - ./sites/${SITE}:/var/www/
+
 db:
   build: containers/mysql
   hostname: mysql
