@@ -6,17 +6,17 @@ Drupal development environment using Docker Compose
 Included containers
 -------------------
 
-Webserver with Apache and PHP 5.6 through mod_php
-Database with MySQL
-Adminer for DB access through a UI
-Mailcatcher for email debugging
-Dev tools with SSH access for the latest command line development tools
-Optionally Solr
+ - Webserver with Apache and PHP 5.6 through mod_php
+ - Database with MySQL
+ - Adminer for DB access through a UI
+ - Mailcatcher for email debugging
+ - Dev tools with SSH access for the latest command line development tools
+ - Optionally Solr server
 
 Installation
 ------------
 
-Install Docker - https://docs.docker.com/engine/installation/
+Install Docker - https://docs.docker.com/engine/installation/  
 Install Docker Compose - https://docs.docker.com/compose/install/
 
 Clone this repo, build the containers and then run them
