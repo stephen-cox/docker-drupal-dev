@@ -35,15 +35,18 @@ ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/apache2
 ENV APACHE_LOCK_DIR /var/lock/apache2
 ENV APACHE_PID_FILE /var/run/apache2.pid
+COPY config/apache2/docker.conf /etc/apache2/conf-available/docker.conf
 COPY config/apache2/drupal.conf /etc/apache2/sites-available/drupal.conf
 RUN usermod -aG docker www-data && \
     a2enmod rewrite && \
+    a2enmod vhost_alias && \
     a2dissite 000-default.conf && \
     a2ensite drupal.conf && \
+    ln -s /etc/apache2/conf-available/docker.conf /etc/apache2/conf-enabled/docker.conf && \
     rm -fr /var/www/*
 
 # Configure PHP
-COPY config/php5/local.ini /etc/php5/apache2/conf.d/00-local.ini
+COPY config/php5/docker.ini /etc/php5/apache2/conf.d/00-docker.ini
 COPY config/php5/xdebug.ini /etc/php5/apache2/conf.d/20-xdebug.ini
 
 # Configure SSMTP
