@@ -8,7 +8,7 @@ web:
   ports:
     - "80:80"
   volumes:
-    - ./sites/${SITE}:/var/www/
+    - ./sites:/var/www
 
 db:
   build: containers/mysql
@@ -48,7 +48,7 @@ dev_tools:
     - /home/docker
     - ./databases:/docker/databases
     - ./sites:/docker/sites
-    - ./sites/${SITE}:/var/www/
+    - ./sites:/var/www
 
 solr:
   image: solr
@@ -56,4 +56,4 @@ solr:
   ports: 
     - "8983:8983"
   volumes:
-    - ./solr/${SITE}:/opt/solr/server/solr/drupal
+    - ./solr:/opt/solr/server/solr
