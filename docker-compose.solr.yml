@@ -1,0 +1,16 @@
+# Docker compose file for Drupal and Solr developement
+# Extends docker-compose.yml
+
+# Override Drupal web server
+web:
+  links:
+    - solr
+
+# Solr server
+solr:
+  image: solr
+  hostname: solr
+  ports: 
+    - "8983:8983"
+  volumes:
+    - ./solr:/opt/solr/server/solr

@@ -1,15 +1,18 @@
+# Docker compose file for Drupal development
+
+# Drupal web server
 web:
   build: containers/drupal
   hostname: drupal
   links:
     - db:mysql
     - mailcatcher
-    - solr
   ports:
     - "80:80"
   volumes:
     - ./sites:/var/www
 
+# Database server
 db:
   build: containers/mysql
   hostname: mysql
@@ -20,6 +23,7 @@ db:
   volumes:
     - /var/lib/mysql  
 
+# Adminer for DB GUI access
 adminer:
   image: clue/adminer
   hostname: adminer
@@ -28,6 +32,7 @@ adminer:
   ports:
     - "8081:80"
 
+# Email catcher
 mailcatcher:
   image: schickling/mailcatcher
   hostname: mailcatcher
@@ -35,11 +40,12 @@ mailcatcher:
     - "1025:1025"
     - "8082:1080"
 
+# Development tools with SSH
 dev_tools:
   build: containers/dev_tools
   hostname: dev-tools
   links:
-    - db:mysql
+    - db:mysqld4df460af14c 
     - mailcatcher
     - web
   ports:
@@ -49,11 +55,3 @@ dev_tools:
     - ./databases:/docker/databases
     - ./sites:/docker/sites
     - ./sites:/var/www
-
-solr:
-  image: solr
-  hostname: solr
-  ports: 
-    - "8983:8983"
-  volumes:
-    - ./solr:/opt/solr/server/solr
