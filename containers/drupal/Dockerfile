@@ -1,3 +1,8 @@
+##
+# Docker Drupal Development
+#
+# Drupal web server container
+
 FROM ubuntu:14.04
 
 MAINTAINER Stephen Cox "mail@stephencox.net"

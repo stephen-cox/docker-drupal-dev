@@ -1,9 +1,14 @@
+##
+# Docker Drupal Development
+#
+# Development tools container
+
 FROM ubuntu:14.04
 
 MAINTAINER Stephen Cox "mail@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
 
-# Install packages.
+# Install packages
 RUN apt-get update && \
     apt-get install -y \
 	    build-essential \
