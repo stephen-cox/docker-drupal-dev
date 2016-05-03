@@ -1,4 +1,7 @@
-# Docker compose file for Drupal development
+##
+# Docker Drupal Development
+#
+# Main Docker Composer file
 
 # Drupal web server
 web:
