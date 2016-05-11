@@ -5,7 +5,7 @@
 
 # Drupal web server
 web:
-  build: containers/drupal
+  build: images/drupal
   hostname: drupal
   links:
     - db:mysql
@@ -17,7 +17,7 @@ web:
 
 # Database server
 db:
-  build: containers/mysql
+  build: images/mysql
   hostname: mysql
   environment:
     - MYSQL_ROOT_PASSWORD=root
@@ -45,7 +45,7 @@ mailcatcher:
 
 # Development tools with SSH
 dev_tools:
-  build: containers/dev_tools
+  build: images/dev_tools
   hostname: dev-tools
   links:
     - db:mysqld4df460af14c 

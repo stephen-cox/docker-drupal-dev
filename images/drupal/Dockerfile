@@ -32,7 +32,6 @@ RUN apt-get update && \
 RUN useradd -m -s /bin/bash -G sudo -p docker docker && \
     mkdir -p "/home/docker/.ssh" && \
     printf "docker ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers.d/docker
-COPY config/docker.ssh.pub /home/docker/.ssh/authorized_keys
 
 # Configure Apache
 ENV APACHE_RUN_USER www-data
