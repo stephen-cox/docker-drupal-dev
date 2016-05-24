@@ -8,6 +8,10 @@ FROM ubuntu:14.04
 MAINTAINER Stephen Cox "mail@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
 
+# Add a docker user
+RUN useradd -m -s /bin/bash -G sudo,www-data -p docker docker && \
+    printf "docker ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers.d/docker
+
 # Install packages.
 RUN apt-get update && \
     apt-get install -y \
@@ -33,10 +37,6 @@ RUN apt-get update && \
 	    ssmtp && \
 	apt-get clean
 
-# Add a docker user
-RUN useradd -m -s /bin/bash -G sudo,www-data -p docker docker && \
-    printf "docker ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers.d/docker
-
 # Configure Apache
 ENV APACHE_RUN_USER docker
 ENV APACHE_RUN_GROUP docker
@@ -47,8 +47,7 @@ ENV APACHE_PID_FILE /var/run/apache2/apache2.pid
 COPY config/apache2/docker.conf /etc/apache2/conf-available/docker.conf
 COPY config/apache2/drupal.conf /etc/apache2/sites-available/drupal.conf
 COPY config/ssl /etc/apache2/ssl
-RUN usermod -aG docker www-data && \
-    a2enmod rewrite && \
+RUN a2enmod rewrite && \
     a2enmod ssl && \
     a2enmod vhost_alias && \
     a2dissite 000-default.conf && \
