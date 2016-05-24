@@ -1,0 +1,15 @@
+##
+# Docker Drupal Development
+#
+# Redis override file
+
+# Override Drupal web server
+web:
+  links:
+    - redis
+
+# Redis server
+redis:
+  image: redis:2.8
+  ports:
+    - "6379"
