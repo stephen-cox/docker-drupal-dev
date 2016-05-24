@@ -15,34 +15,41 @@ RUN apt-get update && \
 	    curl \
 	    libapache2-mod-php5 \
 	    mailutils \
-	    mysql-client \
-	    openssh-server \
-	    php5-gd \
-	    php5-cli \
-	    php5-curl \
-	    php5-imagick \
-	    php5-imap \
-	    php5-mcrypt \
-	    php5-mysql \
-	    php5-xdebug \
+        php5-curl \
+        php5-gd \
+        php5-imagick \
+        php5-imap \
+        php5-intl \
+        php5-json \
+        php5-ldap \
+        php5-mcrypt \
+        php5-memcache \
+        php5-mysql \
+        php5-redis \
+        php5-sqlite \
+        php5-tidy \
+        php5-xdebug \
+        php5-xhprof \
 	    ssmtp && \
 	apt-get clean
 
 # Add a docker user
-RUN useradd -m -s /bin/bash -G sudo -p docker docker && \
-    mkdir -p "/home/docker/.ssh" && \
+RUN useradd -m -s /bin/bash -G sudo,www-data -p docker docker && \
     printf "docker ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers.d/docker
 
 # Configure Apache
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
+ENV APACHE_RUN_USER docker
+ENV APACHE_RUN_GROUP docker
 ENV APACHE_LOG_DIR /var/log/apache2
 ENV APACHE_LOCK_DIR /var/lock/apache2
-ENV APACHE_PID_FILE /var/run/apache2.pid
+ENV APACHE_RUN_DIR /var/run/apache2
+ENV APACHE_PID_FILE /var/run/apache2/apache2.pid
 COPY config/apache2/docker.conf /etc/apache2/conf-available/docker.conf
 COPY config/apache2/drupal.conf /etc/apache2/sites-available/drupal.conf
+COPY config/ssl /etc/apache2/ssl
 RUN usermod -aG docker www-data && \
     a2enmod rewrite && \
+    a2enmod ssl && \
     a2enmod vhost_alias && \
     a2dissite 000-default.conf && \
     a2ensite drupal.conf && \
@@ -52,10 +59,11 @@ RUN usermod -aG docker www-data && \
 # Configure PHP
 COPY config/php5/docker.ini /etc/php5/apache2/conf.d/00-docker.ini
 COPY config/php5/xdebug.ini /etc/php5/apache2/conf.d/20-xdebug.ini
+RUN php5enmod imap
 
 # Configure SSMTP
 COPY config/ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf
 
-EXPOSE 80
+EXPOSE 80 443
 
 CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
