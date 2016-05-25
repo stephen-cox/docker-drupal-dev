@@ -2,12 +2,14 @@
 echo "Database dump script"
 
 # Confirm before continuing
-echo "Warning: This will overwrite all databases in the databases directory"
-read -n 1 -p "Are you sure [Y/N]? " REPLY
-echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo "Aborted"
-    exit 1
+if [ "$1" != "-y" ]; then
+	echo "Warning: This will overwrite all databases in the databases directory"
+	read -n 1 -p "Are you sure [Y/N]? " REPLY
+	echo
+	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+	    echo "Aborted"
+	    exit 1
+	fi
 fi
 
 # MySQL authentication details
