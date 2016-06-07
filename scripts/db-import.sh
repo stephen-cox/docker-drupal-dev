@@ -3,7 +3,7 @@ echo "Database import script"
 
 # MySQL authentication details
 MYSQL_USER="root"
-MYSQL_HOST=127.0.0.1
+MYSQL_HOST=mysql
 export MYSQL_PWD="root"
 
 # Check if mysql client installed

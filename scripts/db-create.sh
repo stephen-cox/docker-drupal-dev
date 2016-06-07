@@ -3,14 +3,14 @@ echo "Database create script"
 
 # MySQL authentication details
 MYSQL_USER="root"
-MYSQL_HOST=127.0.0.1
+MYSQL_HOST=mysql
 export MYSQL_PWD="root"
 
 # Check if mysql client installed
 command -v mysql >/dev/null 2>&1 || { echo >&2 "Error: mysql client not installed."; exit 2; }
 
 # Check if MySQL server listening on 127.0.0.1 port 3306
-nc -z 127.0.0.1 3306 || { echo >&2 "Error: Unable to connect to MySQL server"; exit 3; }
+nc -z $MYSQL_HOST 3306 || { echo >&2 "Error: Unable to connect to MySQL server"; exit 3; }
 
 # Determine dump directory
 ROOT_DIR=`git rev-parse --show-toplevel`

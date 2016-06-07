@@ -56,6 +56,5 @@ dev_tools:
     - "2222:22"
   volumes:
     - /home/docker
-    - ./databases:/docker/databases
-    - ./sites:/docker/sites
+    - ./:/docker
     - ./sites:/var/www
