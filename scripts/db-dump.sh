@@ -32,6 +32,6 @@ BACKUP_DIR="$ROOT_DIR/databases"
 # Dump databases
 DATABASES=`mysql -u $MYSQL_USER -h $MYSQL_HOST -e "SHOW DATABASES;" | grep -Ev "(Database|sql|information_schema|performance_schema)"`
 for DB in $DATABASES; do
-  echo "Dumping $DB to $BACKUP_DIR/$DB.sql"
-  mysqldump --force -u $MYSQL_USER  -h $MYSQL_HOST --quick --single-transaction --no-create-db $DB > "$BACKUP_DIR/$DB.sql"
+    echo "Dumping $DB to $BACKUP_DIR/$DB.sql"
+    mysqldump --force -u $MYSQL_USER  -h $MYSQL_HOST --quick --single-transaction --no-create-db $DB > "$BACKUP_DIR/$DB.sql"
 done
