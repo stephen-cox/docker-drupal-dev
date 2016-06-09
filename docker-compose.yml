@@ -2,60 +2,79 @@
 # Docker Drupal Development
 #
 # Main Docker Composer file
+version: '2'
 
-# Drupal web server
-web:
-  build: images/drupal
-  hostname: drupal
-  links:
-    - db:mysql
-    - mailcatcher
-  ports:
-    - "80:80"
-    - "443:443"
-  volumes:
-    - ./sites:/var/www
+services:
+  # Drupal web server
+  web:
+    build: images/drupal
+    hostname: drupal
+    links:
+      - db:mysql
+      - mailcatcher
+      - logs
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./sites:/var/www
+      - log:/var/log
 
-# Database server
-db:
-  build: images/mysql
-  hostname: mysql
-  environment:
-    - MYSQL_ROOT_PASSWORD=root
-  ports:
-    - "3306:3306"
-  volumes:
-    - /var/lib/mysql
+  # Database server
+  db:
+    build: images/mysql
+    hostname: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+      - log:/var/log
 
-# Adminer for DB GUI access
-adminer:
-  image: clue/adminer
-  hostname: adminer
-  links:
-    - db:mysql
-  ports:
-    - "8081:80"
+  # Adminer for DB GUI access
+  adminer:
+    image: clue/adminer
+    hostname: adminer
+    links:
+      - db:mysql
+    ports:
+      - "8081:80"
 
-# Email catcher
-mailcatcher:
-  image: schickling/mailcatcher
-  hostname: mailcatcher
-  ports:
-    - "1025:1025"
-    - "8082:1080"
+  # Email catcher
+  mailcatcher:
+    image: schickling/mailcatcher
+    hostname: mailcatcher
+    ports:
+      - "1025:1025"
+      - "8082:1080"
 
-# Development tools with SSH
-dev_tools:
-  build: images/dev_tools
-  hostname: dev-tools
-  links:
-    - db:mysqld4df460af14c 
-    - mailcatcher
-    - web
-  ports:
-    - "2222:22"
-  volumes:
-    - /home/docker
-    - ./databases:/docker/databases
-    - ./sites:/docker/sites
-    - ./sites:/var/www
+  # Pimp my logs server
+  logs:
+    build: images/logs
+    hostname: logs
+    ports:
+      - "514:514/udp"
+      - "8083:80"
+    volumes:
+      - log:/var/log
+
+  # Development tools with SSH
+  dev_tools:
+    build: images/dev_tools
+    hostname: dev-tools
+    links:
+      - db:mysqld4df460af14c 
+      - mailcatcher
+      - web
+    ports:
+      - "2222:22"
+    volumes:
+      - /home/docker
+      - ./databases:/docker/databases
+      - ./sites:/docker/sites
+      - ./sites:/var/www
+
+volumes:
+  log: {}
+  mysql: {}

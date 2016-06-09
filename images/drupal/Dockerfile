@@ -34,6 +34,7 @@ RUN apt-get update && \
         php5-tidy \
         php5-xdebug \
         php5-xhprof \
+        rsyslog \
 	    ssmtp && \
 	apt-get clean
 
@@ -62,6 +63,9 @@ RUN php5enmod imap
 
 # Configure SSMTP
 COPY config/ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf
+
+# Configure rsyslog
+COPY config/rsyslog/20-logs.conf /etc/rsyslog.d/20-logs.conf
 
 EXPOSE 80 443
 
