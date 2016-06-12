@@ -5,6 +5,7 @@
 version: '2'
 
 services:
+
   # Drupal web server
   web:
     build: images/drupal
@@ -12,13 +13,12 @@ services:
     links:
       - db:mysql
       - mailcatcher
-      - logs
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./sites:/var/www
-      - log:/var/log
+      - apache_logs:/var/log/apache2
 
   # Database server
   db:
@@ -30,16 +30,6 @@ services:
       - "3306:3306"
     volumes:
       - mysql:/var/lib/mysql
-      - log:/var/log
-
-  # Adminer for DB GUI access
-  adminer:
-    image: clue/adminer
-    hostname: adminer
-    links:
-      - db:mysql
-    ports:
-      - "8081:80"
 
   # Email catcher
   mailcatcher:
@@ -47,34 +37,36 @@ services:
     hostname: mailcatcher
     ports:
       - "1025:1025"
-      - "8082:1080"
+      - "8081:1080"
 
-  # Pimp my logs server
-  logs:
-    build: images/logs
-    hostname: logs
-    ports:
-      - "514:514/udp"
-      - "8083:80"
-    volumes:
-      - log:/var/log
-
-  # Development tools with SSH
-  dev_tools:
-    build: images/dev_tools
-    hostname: dev-tools
+  # Web development tools
+  web_tools:
+    build: images/web_tools
+    hostname: web-tools
     links:
-      - db:mysqld4df460af14c 
+      - db:mysql
       - mailcatcher
-      - web
+    ports:
+      - "8080:80"
+    volumes:
+      - apache_logs:/var/log/apache2
+
+  # CLI development tools with SSH
+  cli_tools:
+    build: images/cli_tools
+    hostname: cli-tools
+    links:
+      - db:mysql
+      - mailcatcher
     ports:
       - "2222:22"
     volumes:
-      - /home/docker
       - ./databases:/docker/databases
       - ./sites:/docker/sites
       - ./sites:/var/www
+      - /home/docker
+      - apache_logs:/var/log/apache2
 
 volumes:
-  log: {}
+  apache_logs: {}
   mysql: {}

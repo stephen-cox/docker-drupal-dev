@@ -222,8 +222,8 @@
       }
     },
     "apache5": {
-      "display" : "Apache Error - Pimp my log",
-      "path"    : "\/var\/log\/apache2\/error.log",
+      "display" : "Apache Error - Web Tools",
+      "path"    : "\/var\/log\/apache2\/web-tools-error.log",
       "refresh" : 5,
       "max"     : 10,
       "notify"  : true,
@@ -258,8 +258,8 @@
       }
     },
     "apache6": {
-      "display" : "Apache Access - Pimp my log",
-      "path"    : "\/var\/log\/apache2\/access.log",
+      "display" : "Apache Access - Web Tools",
+      "path"    : "\/var\/log\/apache2\/web-tools-access.log",
       "refresh" : 0,
       "max"     : 10,
       "notify"  : false,
