@@ -49,6 +49,7 @@ services:
       - "1025:1025"
       - "8082:1080"
 
+<<<<<<< HEAD
   # Pimp my logs server
   logs:
     build: images/logs
@@ -78,3 +79,19 @@ services:
 volumes:
   log: {}
   mysql: {}
+=======
+# Development tools with SSH
+dev_tools:
+  build: images/dev_tools
+  hostname: dev-tools
+  links:
+    - db:mysqld4df460af14c 
+    - mailcatcher
+    - web
+  ports:
+    - "2222:22"
+  volumes:
+    - /home/docker
+    - ./:/docker
+    - ./sites:/var/www
+>>>>>>> 2c2af107039b1076c42369b215fa5d5e16fbef24
