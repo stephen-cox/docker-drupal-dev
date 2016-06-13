@@ -1,0 +1,12 @@
+#!/bin/bash
+
+CWD="$(dirname "$0")"
+
+declare -A MODULES
+
+for f in "${CWD}/commands/*.sh"; do source $f; done
+
+MODULE=$1
+FUNCTION=$2
+
+${MODULE}_${FUNCTION}
