@@ -34,6 +34,7 @@ RUN apt-get update && \
         php5-tidy \
         php5-xdebug \
         php5-xhprof \
+        php-soap \
         rsyslog \
 	    ssmtp && \
 	apt-get clean
