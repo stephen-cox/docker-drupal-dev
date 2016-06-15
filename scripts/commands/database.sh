@@ -5,6 +5,7 @@ MODULES[db]='Database functions'
 
 # Declare db module commands
 declare -A db_COMMANDS
+db_COMMANDS[cli]='Run database CLI'
 db_COMMANDS[create]='Create an empty database for every SQL file in the database directory'
 db_COMMANDS[dump]='Dump databases to database directory'
 db_COMMANDS[import]='Import all the databases in the database directory'
@@ -42,9 +43,20 @@ function _get_dump_dir() {
 }
 
 ##
+# Open MySQL cli
+##
+function db_cli() {
+    echo "Running DB CLI"
+
+    _check_mysql
+    mysql -u $MYSQL_USER  -h $MYSQL_HOST
+}
+
+##
 # Create databases
 ##
 function db_create() {
+    echo "Creating databases"
 
     _check_mysql
     DB_DIR=$(_get_dump_dir)
@@ -53,7 +65,7 @@ function db_create() {
         NAME=${FILE##*/}
         DB=${NAME%.sql}
         if ! mysql -u $MYSQL_USER  -h $MYSQL_HOST -e "USE ${DB}" >/dev/null 2>&1; then
-            echo "Creating database ${DB}"
+            echo "Creating ${DB}"
             mysql -u $MYSQL_USER  -h $MYSQL_HOST -e "CREATE DATABASE ${DB}"
         else
             echo "Database ${DB} exists"
@@ -65,14 +77,17 @@ function db_create() {
 # Dump databases
 ##
 function db_dump() {
+    echo "Dumping databases"
 
     _check_mysql
-    BACKUP_DIR=$(_get_dump_dir)
+    DB_DIR=$(_get_dump_dir)
+
+    confirm "You are about to overwrite all databases in the databases directory"
 
     DATABASES=`mysql -u $MYSQL_USER -h $MYSQL_HOST -e "SHOW DATABASES;" | grep -Ev "(Database|sql|information_schema|performance_schema)"`
     for DB in $DATABASES; do
-      echo "Dumping $DB to $BACKUP_DIR/$DB.sql"
-      mysqldump --force -u $MYSQL_USER  -h $MYSQL_HOST --quick --single-transaction --no-create-db $DB > "$BACKUP_DIR/$DB.sql"
+      echo "Dumping ${DB} to ${DB_DIR}/${DB}.sql"
+      mysqldump --force -u $MYSQL_USER  -h $MYSQL_HOST --quick --single-transaction --no-create-db $DB > "${DB_DIR}/${DB}.sql"
     done
 }
 
@@ -80,6 +95,7 @@ function db_dump() {
 # Import databases
 ##
 function db_import() {
+    echo "Importing databases"
 
     _check_mysql
     DB_DIR=$(_get_dump_dir)
@@ -88,10 +104,10 @@ function db_import() {
         NAME=${FILE##*/}
         DB=${NAME%.sql}
         if ! mysql -u $MYSQL_USER  -h $MYSQL_HOST -e "USE ${DB}" >/dev/null 2>&1; then
-            echo "Creating database ${DB}"
+            echo "Creating ${DB}"
             mysql -u $MYSQL_USER  -h $MYSQL_HOST -e "CREATE DATABASE ${DB}"
         fi
-        echo "Importing database ${DB}"
+        echo "Importing ${DB}"
         mysql -u $MYSQL_USER  -h $MYSQL_HOST $DB < $FILE
     done
 }
