@@ -40,7 +40,8 @@ function confirm() {
 
 # Initialise metadata and load commands
 declare -A MODULES
-CWD="$(dirname "$0")"
+THIS=$(readlink -f "${BASH_SOURCE[0]}")
+CWD=$(dirname "${THIS}")
 for F in ${CWD}/commands/*.sh; do
     source $F
 done
