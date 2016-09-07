@@ -1,0 +1,21 @@
+##
+# Docker Drupal Development
+#
+# Solr override file
+version: '2'
+
+
+services:
+  # Override Drupal web server
+  web:
+    links:
+      - solr
+
+  # Solr server
+  solr:
+    image: solr:5.5
+    hostname: solr
+    ports: 
+      - "8983:8983"
+    volumes:
+      - ./solr:/opt/solr/server/solr
