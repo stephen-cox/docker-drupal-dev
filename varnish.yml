@@ -1,0 +1,19 @@
+##
+# Docker Drupal Development
+#
+# Vanrish override file
+version: '2'
+
+services:
+
+  # Varnish server
+  varnish:
+    build: images/varnish
+    depends_on:
+      - web
+    hostname: varnish
+    ports: 
+      - "81:81"
+      - "6082:6082"
+    links:
+      - web
