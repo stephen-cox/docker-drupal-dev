@@ -9,10 +9,13 @@ MAINTAINER Stephen Cox "mail@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
 
 
-# Install packages
+# Install Varnish 4
 RUN apt-get update && \
-    apt-get install -y \
-        varnish && \
+    apt-get install -y apt-transport-https curl && \
+    curl https://repo.varnish-cache.org/ubuntu/GPG-key.txt | apt-key add - && \
+    echo "deb https://repo.varnish-cache.org/ubuntu/ trusty varnish-4.0" >> /etc/apt/sources.list.d/varnish-cache.list && \
+    apt-get update && \
+    apt-get install -y varnish && \
     apt-get clean
 
 # Copy config
@@ -21,4 +24,4 @@ COPY config/secret /etc/varnish/secret
 
 EXPOSE 81 6082
 
-CMD ["/usr/sbin/varnishd", "-F", "-a", ":81", "-T", "localhost:6082", "-f", "/etc/varnish/default.vcl", "-S", "/etc/varnish/secret", "-s", "main=malloc,256M"]
+CMD ["/usr/sbin/varnishd", "-F", "-a", ":81", "-T", "localhost:6082", "-f", "/etc/varnish/default.vcl", "-S", "/etc/varnish/secret", "-s", "malloc,256m"]
