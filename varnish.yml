@@ -9,8 +9,6 @@ services:
   # Varnish server
   varnish:
     build: images/varnish
-    depends_on:
-      - web
     hostname: varnish
     ports: 
       - "81:81"
