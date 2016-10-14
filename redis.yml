@@ -4,12 +4,16 @@
 # Redis override file
 
 # Override Drupal web server
-web:
-  links:
-    - redis
+version: '2'
 
-# Redis server
-redis:
-  image: redis:2.8
-  ports:
-    - "6379"
+services:
+
+  web:
+    links:
+      - redis
+
+  # Redis server
+  redis:
+    image: redis:latest
+    ports:
+      - "6379"

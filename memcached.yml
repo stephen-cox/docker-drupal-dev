@@ -1,0 +1,22 @@
+##
+# Docker Drupal Development
+#
+# Memcached override file
+
+version: '2'
+
+services:
+
+  web:
+    links:
+      - memcached
+
+  cli_tools:
+    links:
+      - memcached
+
+  # Memcached server
+  memcached:
+    image: memcached:latest
+    ports:
+      - "11211"

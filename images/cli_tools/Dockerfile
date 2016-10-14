@@ -16,11 +16,22 @@ RUN apt-get update && \
 	    git \
 	    openssh-server \
 	    mysql-client \
-	    php5-cli \
-	    php5-mysql \
-	    php5-gd \
-	    php5-curl \
-	    php5-xdebug \
+        php5-curl \
+        php5-gd \
+        php5-imagick \
+        php5-imap \
+        php5-intl \
+        php5-json \
+        php5-ldap \
+        php5-mcrypt \
+        php5-memcache \
+        php5-mysql \
+        php5-redis \
+        php5-sqlite \
+        php5-tidy \
+        php5-xdebug \
+        php5-xhprof \
+        php-soap \
 	    unzip \
 	    wget && \
 	apt-get clean
