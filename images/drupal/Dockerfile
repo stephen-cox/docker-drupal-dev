@@ -17,6 +17,7 @@ RUN apt-get update && \
     apt-get install -y \
 	    apache2 \
 	    curl \
+        imagemagick \
 	    libapache2-mod-php5 \
 	    mailutils \
         php5-curl \
