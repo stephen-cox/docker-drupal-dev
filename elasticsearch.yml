@@ -4,11 +4,10 @@
 # Elasticsearch override file
 version: '2'
 
-
 services:
-  # Override Drupal web server
+  # Add link to Drupal web server
   web:
-    lis:
+    links:
       - elasticsearch
 
   # Elasticsearch server
@@ -22,6 +21,15 @@ services:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g"
     volumes:
       - elasticsearch:/usr/share/elasticsearch/data
+
+  # Kibana
+  kibana:
+    image: docker.elastic.co/kibana/kibana:5.2.2
+    hostname: kibana
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
 
 volumes:
   elasticsearch: {}
