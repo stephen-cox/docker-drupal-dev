@@ -15,11 +15,12 @@ RUN useradd -m -s /bin/bash -G sudo,www-data,adm -p docker docker && \
 # Install packages.
 RUN apt-get update && \
     apt-get install -y \
-        apache2 \
-        curl \
-        git \
-        libapache2-mod-php5 \
-        php5-mysql && \
+      apache2 \
+      curl \
+      git \
+      libapache2-mod-php5 \
+      php5-mysql \
+      php5-pgsql && \
     apt-get clean
 
 # Configure Apache

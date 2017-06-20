@@ -11,30 +11,32 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install packages
 RUN apt-get update && \
     apt-get install -y \
-	    build-essential \
-	    curl \
-	    git \
-	    openssh-server \
-	    mysql-client \
-        php5-curl \
-        php5-gd \
-        php5-imagick \
-        php5-imap \
-        php5-intl \
-        php5-json \
-        php5-ldap \
-        php5-mcrypt \
-        php5-memcache \
-        php5-mysql \
-        php5-redis \
-        php5-sqlite \
-        php5-tidy \
-        php5-xdebug \
-        php5-xhprof \
-        php-soap \
-	    unzip \
-	    wget && \
-	apt-get clean
+      build-essential \
+      curl \
+      git \
+      mysql-client \
+      openssh-server \
+      php5-curl \
+      php5-gd \
+      php5-imagick \
+      php5-imap \
+      php5-intl \
+      php5-json \
+      php5-ldap \
+      php5-mcrypt \
+      php5-memcache \
+      php5-mysql \
+      php5-pgsql \
+      php5-redis \
+      php5-sqlite \
+      php5-tidy \
+      php5-xdebug \
+      php5-xhprof \
+      php-soap \
+      postgresql-client \
+      unzip \
+      wget && \
+    apt-get clean
 
 # Add a docker user
 RUN useradd -m -s /bin/bash -G sudo -p docker docker && \

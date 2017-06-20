@@ -1,0 +1,33 @@
+##
+# Docker Drupal Development
+#
+# Postgres override file
+version: '2'
+
+services:
+
+  web:
+    links:
+      - postgres
+
+  web_tools:
+    links:
+      - postgres
+
+  cli_tools:
+    links:
+      - postgres
+
+  postgres:
+    image: postgres:9.6
+    hostname: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql
+
+volumes:
+  postgres: {}

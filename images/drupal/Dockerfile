@@ -15,30 +15,31 @@ RUN useradd -m -s /bin/bash -G sudo,www-data -p docker docker && \
 # Install packages.
 RUN apt-get update && \
     apt-get install -y \
-	    apache2 \
-	    curl \
-        imagemagick \
-	    libapache2-mod-php5 \
-	    mailutils \
-        php5-curl \
-        php5-gd \
-        php5-imagick \
-        php5-imap \
-        php5-intl \
-        php5-json \
-        php5-ldap \
-        php5-mcrypt \
-        php5-memcache \
-        php5-mysql \
-        php5-redis \
-        php5-sqlite \
-        php5-tidy \
-        php5-xdebug \
-        php5-xhprof \
-        php-soap \
-        rsyslog \
-	    ssmtp && \
-	apt-get clean
+      apache2 \
+      curl \
+      imagemagick \
+      libapache2-mod-php5 \
+      mailutils \
+      php5-curl \
+      php5-gd \
+      php5-imagick \
+      php5-imap \
+      php5-intl \
+      php5-json \
+      php5-ldap \
+      php5-mcrypt \
+      php5-memcache \
+      php5-mysql \
+      php5-pgsql \
+      php5-redis \
+      php5-sqlite \
+      php5-tidy \
+      php5-xdebug \
+      php5-xhprof \
+      php-soap \
+      rsyslog \
+      ssmtp && \
+    apt-get clean
 
 # Configure Apache
 ENV APACHE_RUN_USER docker
@@ -61,7 +62,8 @@ RUN a2enmod rewrite && \
 # Configure PHP
 COPY config/php5/docker.ini /etc/php5/apache2/conf.d/00-docker.ini
 COPY config/php5/xdebug.ini /etc/php5/apache2/conf.d/20-xdebug.ini
-RUN php5enmod imap
+RUN php5enmod imap && \
+    php5enmod mcrypt
 
 # Configure SSMTP
 COPY config/ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf
