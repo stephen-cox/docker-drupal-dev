@@ -1,4 +1,4 @@
-dockerDocker Drupal Development
+Docker Drupal Development
 =========================
 
 Drupal development environment using Docker Compose
