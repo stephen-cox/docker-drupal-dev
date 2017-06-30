@@ -8,7 +8,7 @@ services:
 
   # Drupal web server
   web:
-    build: images/web_php5
+    image: ddd/web-php5
     hostname: drupal
     links:
       - db:mysql
@@ -41,7 +41,7 @@ services:
 
   # Web development tools
   web_tools:
-    build: images/web_tools
+    image: ddd/cli-tools-php5
     hostname: web-tools
     links:
       - db:mysql

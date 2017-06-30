@@ -1,4 +1,4 @@
-Docker Drupal Development
+dockerDocker Drupal Development
 =========================
 
 Drupal development environment using Docker Compose
@@ -24,6 +24,10 @@ Clone this repo, build the containers and then run them
     git clone https://github.com/stephen-cox/docker-drupal-dev.git
     cd docker-drupal-dev
     docker build images/apache2/ -t ddd/apache2
+    docker build images/web_php5/ -t ddd/web-php5
+    docker build images/web_php7/ -t ddd/web-php7
+    docker build images/cli_tools_php5/ -t ddd/cli-tools-php5
+    docker build images/cli_tools_php7/ -t ddd/cli-tools-php7
     docker-compose build
     docker-compose up    
 

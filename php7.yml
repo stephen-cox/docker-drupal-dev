@@ -1,0 +1,15 @@
+##
+# Docker Drupal Development
+#
+# Main Docker Composer file
+version: '2'
+
+services:
+
+  # Drupal web server with PHP 7
+  web:
+    image: ddd/web-php7
+
+  # CLI development tools with SSH and PHP 7
+  cli_tools:
+    image: ddd/cli-tools-php7
