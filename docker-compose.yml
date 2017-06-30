@@ -8,7 +8,7 @@ services:
 
   # Drupal web server
   web:
-    build: images/drupal
+    build: images/web_php7
     hostname: drupal
     links:
       - db:mysql
