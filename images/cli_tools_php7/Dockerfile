@@ -3,7 +3,7 @@
 #
 # Development tools container
 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER Stephen Cox "mail@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
@@ -16,23 +16,27 @@ RUN apt-get update && \
       git \
       mysql-client \
       openssh-server \
-      php5-curl \
-      php5-gd \
-      php5-imagick \
-      php5-imap \
-      php5-intl \
-      php5-json \
-      php5-ldap \
-      php5-mcrypt \
-      php5-memcache \
-      php5-mysql \
-      php5-pgsql \
-      php5-redis \
-      php5-sqlite \
-      php5-tidy \
-      php5-xdebug \
-      php5-xhprof \
+      php7.0-curl \
+      php7.0-gd \
+      php7.0-ldap \
+      php7.0-mysql \
+      php7.0-opcache \
+      php7.0-pgsql \
+      php7.0-sqlite \
+      php7.0-tidy \
+      php7.0-xml \
+      php7.0-zip \
+      php-cli \
+      php-imagick \
+      php-imap \
+      php-intl \
+      php-json \
+      php-mbstring \
+      php-mcrypt \
+      php-memcache \
+      php-redis \
       php-soap \
+      php-xdebug \
       postgresql-client \
       unzip \
       wget && \
@@ -41,7 +45,7 @@ RUN apt-get update && \
 # Add a docker user
 RUN useradd -m -s /bin/bash -G sudo -p docker docker && \
     mkdir -p "/home/docker/.ssh" && \
-    printf "docker ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers.d/docker
+    printf "\ndocker ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers
 COPY config/docker.ssh.pub /home/docker/.ssh/authorized_keys
 RUN chown -R docker:docker /home/docker && \
     chmod 755 /home/docker && \
@@ -60,9 +64,13 @@ RUN wget http://files.drush.org/drush.phar && \
     mv drush.phar /usr/local/bin/drush
 
 # Install npm, gulp and bower
-RUN curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash - && \
-    apt-get install -y nodejs && \
-    npm install -g bower gulp
+RUN curl -sL https://deb.nodesource.com/setup_0.12 | bash - && \
+    apt-get install -y
+      nodejs \
+      npm && \
+    npm install -g
+      bower
+      gulp
 
 # Setup SSH
 RUN mkdir /var/run/sshd

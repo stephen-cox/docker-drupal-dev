@@ -53,7 +53,7 @@ services:
 
   # CLI development tools with SSH
   cli_tools:
-    build: images/cli_tools
+    build: images/cli_tools_php7
     hostname: cli-tools
     links:
       - db:mysql

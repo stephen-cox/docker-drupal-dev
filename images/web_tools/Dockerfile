@@ -3,14 +3,14 @@
 #
 # Web tools container
 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER Stephen Cox "mail@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
 
 # Add a docker user
 RUN useradd -m -s /bin/bash -G sudo,www-data,adm -p docker docker && \
-    printf "docker ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers.d/docker
+    printf "\ndocker ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers
 
 # Install packages.
 RUN apt-get update && \
@@ -18,9 +18,9 @@ RUN apt-get update && \
       apache2 \
       curl \
       git \
-      libapache2-mod-php5 \
-      php5-mysql \
-      php5-pgsql && \
+      libapache2-mod-php7.0 \
+      php7.0-mysql \
+      php7.0-pgsql && \
     apt-get clean
 
 # Configure Apache
@@ -41,8 +41,11 @@ RUN mkdir /var/www/adminer && \
     curl -L https://www.adminer.org/latest.php -o /var/www/adminer/index.php
 
 # Install Pimp My Log
-RUN git clone https://github.com/potsky/PimpMyLog.git /var/www/logs
+RUN git clone https://github.com/potsky/PimpMyLog.git /var/www/logs && \
+    cd /var/www/logs/ && \
+    git checkout v1.7.14
 COPY config/apache2/config.user.php /var/www/logs/config.user.php
+RUN touch '/var/www/logs/inc/test.PLEASE_REMOVE_ME.access_from_172.18.0.1_only.php'
 
 # Add index file
 COPY config/apache2/index.html /var/www/index.html

@@ -23,6 +23,7 @@ Clone this repo, build the containers and then run them
 
     git clone https://github.com/stephen-cox/docker-drupal-dev.git
     cd docker-drupal-dev
+    docker build images/apache2/ -t ddd/apache2
     docker-compose build
     docker-compose up    
 

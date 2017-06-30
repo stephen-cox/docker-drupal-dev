@@ -3,7 +3,7 @@
 #
 # Drupal web server container
 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER Stephen Cox "mail@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
@@ -11,10 +11,6 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install Varnish 4
 RUN apt-get update && \
-    apt-get install -y apt-transport-https curl && \
-    curl https://repo.varnish-cache.org/ubuntu/GPG-key.txt | apt-key add - && \
-    echo "deb https://repo.varnish-cache.org/ubuntu/ trusty varnish-4.1" >> /etc/apt/sources.list.d/varnish-cache.list && \
-    apt-get update && \
     apt-get install -y varnish && \
     apt-get clean
 
