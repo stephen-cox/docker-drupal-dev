@@ -9,33 +9,37 @@ MAINTAINER Stephen Cox "mail@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install packages
-RUN apt-get update && \
+RUN locale-gen en_US.UTF-8 && \
+    export LANG=en_US.UTF-8 && \
+    apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:ondrej/php && \
+    apt-get update && \
     apt-get install -y \
       build-essential \
       curl \
       git \
       mysql-client \
       openssh-server \
-      php7.0-curl \
-      php7.0-gd \
-      php7.0-ldap \
-      php7.0-mysql \
-      php7.0-opcache \
-      php7.0-pgsql \
-      php7.0-sqlite \
-      php7.0-tidy \
-      php7.0-xml \
-      php7.0-zip \
-      php-cli \
-      php-imagick \
-      php-imap \
-      php-intl \
-      php-json \
-      php-mbstring \
-      php-mcrypt \
+      php5.6-cli \
+      php5.6-curl \
+      php5.6-gd \
+      php5.6-imap \
+      php5.6-ldap \
+      php5.6-mbstring \
+      php5.6-mcrypt \
+      php5.6-mysql \
+      php5.6-opcache \
+      php5.6-pgsql \
+      php5.6-soap \
+      php5.6-sqlite \
+      php5.6-tidy \
+      php5.6-xml \
+      php5.6-zip \
+      php5.6-intl \
+      php5.6-json \
       php-memcache \
       php-redis \
-      php-soap \
       php-xdebug \
       postgresql-client \
       unzip \
@@ -64,9 +68,10 @@ RUN wget http://files.drush.org/drush.phar && \
     mv drush.phar /usr/local/bin/drush
 
 # Install npm, gulp and bower
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_0.12 | bash - && \
     apt-get install -y \
-      nodejs && \
+      nodejs \
+      npm && \
     npm install -g \
       bower \
       gulp
