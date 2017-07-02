@@ -8,7 +8,7 @@ services:
 
   # Drupal web server
   web:
-    image: ddd/web-php5
+    image: dockerdrupaldev/apache2-php5:latest
     hostname: drupal
     links:
       - db:mysql
@@ -53,7 +53,7 @@ services:
 
   # CLI development tools with SSH
   cli_tools:
-    image: ddd/cli-tools-php5
+    image: dockerdrupaldev/cli-tools-php5:latest
     hostname: cli-tools
     links:
       - db:mysql
