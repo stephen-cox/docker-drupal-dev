@@ -19,6 +19,7 @@ services:
     volumes:
       - ./sites:/var/www
       - apache_logs:/var/log/apache2
+      - ./etc/PHP/docker.ini:/etc/php/5.6/conf.d/docker.ini
 
   # Database server
   db:

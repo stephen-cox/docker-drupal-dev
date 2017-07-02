@@ -3,7 +3,7 @@
 #
 # Drupal web server container
 
-FROM ddd/apache2
+FROM dockerdrupaldev/apache2
 
 LABEL maintainer="web@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
@@ -38,10 +38,10 @@ RUN locale-gen en_US.UTF-8 && \
     apt-get clean
 
 # Configure PHP
-COPY config/php/docker.ini /etc/php/5.6/mods-available/docker.ini
+COPY config/php/docker.ini /etc/php/5.6/conf.d/docker.ini
 COPY config/php/xdebug.ini /etc/php/5.6/mods-available/xdebug.ini
 RUN phpenmod xdebug && \
-    ln -s /etc/php/5.6/mods-available/docker.ini /etc/php/5.6/apache2/conf.d/90-docker.ini
+    ln -s /etc/php/5.6/conf.d/docker.ini /etc/php/5.6/apache2/conf.d/90-docker.ini
 
 EXPOSE 80 443
 

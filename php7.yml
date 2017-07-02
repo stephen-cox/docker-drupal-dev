@@ -9,6 +9,8 @@ services:
   # Drupal web server with PHP 7
   web:
     image: dockerdrupaldev/apache2-php7:latest
+    volumes:
+      - ./etc/PHP/docker.ini:/etc/php/7.0/conf.d/docker.ini
 
   # CLI development tools with SSH and PHP 7
   cli_tools:
