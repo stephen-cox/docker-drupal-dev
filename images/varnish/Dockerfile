@@ -1,24 +1,23 @@
 ##
 # Docker Drupal Development
 #
-# Drupal web server container
+# Varnish image
 
 FROM ubuntu:16.04
 
 LABEL maintainer="web@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
 
-
-# Install Varnish 4
+# Install Varnish
 RUN apt-get update && \
     apt-get install -y \
       varnish && \
     apt-get clean
 
-# Copy config
-COPY config/default.vcl /etc/varnish/default.vcl
-COPY config/secret /etc/varnish/secret
+ENV VCL_CONFIG    /etc/varnish/default.vcl
+ENV SECRET        /etc/varnish/secret
+ENV CACHE_SIZE    256m
 
-EXPOSE 81 6082
+EXPOSE 80 6082
 
-CMD ["/usr/sbin/varnishd", "-F", "-a", ":81", "-T", "localhost:6082", "-f", "/etc/varnish/default.vcl", "-S", "/etc/varnish/secret", "-s", "malloc,256m"]
+CMD /usr/sbin/varnishd -F -a :80 -T :6082 -f ${VCL_CONFIG} -S ${SECRET} -s malloc,${CACHE_SIZE}
