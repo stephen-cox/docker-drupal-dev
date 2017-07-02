@@ -19,6 +19,7 @@ RUN apt-get update && \
       curl \
       git \
       libapache2-mod-php7.0 \
+      php7.0-mbstring \
       php7.0-mysql \
       php7.0-pgsql && \
     apt-get clean
