@@ -5,12 +5,6 @@
 
 [mysqld]
 
-bind-address=0.0.0.0
-console=1
-general_log=1
-general_log_file=/dev/stdout
-log_error=/dev/stderr
-
 # Defaults
 character_set_server = utf8
 collation_server = utf8_general_ci
@@ -28,4 +22,3 @@ max_connections = 320
 query_cache_limit = 1M
 query_cache_size = 16M
 sync_binlog = 1
-table_cache = 500

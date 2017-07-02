@@ -38,5 +38,7 @@ docker build images/apache2_php5/ -t dockerdrupaldev/apache2-php5:latest
 docker build images/apache2_php7/ -t dockerdrupaldev/apache2-php7:latest
 docker build images/cli_tools_php5/ -t dockerdrupaldev/cli-tools-php5:latest
 docker build images/cli_tools_php7/ -t dockerdrupaldev/cli-tools-php7:latest
+docker build images/mysql/ -t dockerdrupaldev/mysql:latest
+docker build images/web_tools/ -t dockerdrupaldev/web-tools:latest
 docker build images/varnish/ -t dockerdrupaldev/varnish:latest
 ```

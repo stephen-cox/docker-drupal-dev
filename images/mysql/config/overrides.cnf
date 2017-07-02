@@ -1,6 +1,6 @@
 ##
 # Docker Drupal Development
 #
-# Override MySQL default config
+# Override config
 
 [mysqld]

@@ -19,11 +19,11 @@ services:
     volumes:
       - ./sites:/var/www
       - apache_logs:/var/log/apache2
-      - ./etc/PHP/docker.ini:/etc/php/5.6/conf.d/docker.ini
+      - ./etc/php/docker.ini:/etc/php/5.6/conf.d/docker.ini
 
   # Database server
   db:
-    build: images/mysql
+    image: dockerdrupaldev/mysql:latest
     hostname: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -31,6 +31,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql:/var/lib/mysql
+      - ./etc/mysql/my.cnf:/etc/mysql/conf.d/95-overrides.cnf
 
   # Email catcher
   mailcatcher:
@@ -42,7 +43,7 @@ services:
 
   # Web development tools
   web_tools:
-    build: images/web_tools
+    image: dockerdrupaldev/web-tools:latest
     hostname: web-tools
     links:
       - db:mysql
