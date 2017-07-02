@@ -5,7 +5,7 @@
 
 FROM ubuntu:16.04
 
-MAINTAINER Stephen Cox "mail@stephencox.net"
+LABEL maintainer="web@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
 
 # Add a docker user

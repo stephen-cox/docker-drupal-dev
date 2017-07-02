@@ -5,13 +5,14 @@
 
 FROM ubuntu:16.04
 
-MAINTAINER Stephen Cox "mail@stephencox.net"
+LABEL maintainer="web@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
 
 
 # Install Varnish 4
 RUN apt-get update && \
-    apt-get install -y varnish && \
+    apt-get install -y \
+      varnish && \
     apt-get clean
 
 # Copy config
