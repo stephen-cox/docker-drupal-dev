@@ -3,5 +3,8 @@ databases/*
 sites/*
 solr/*
 
+# Local config files
+etc/*
+
 # IDE files
 .idea

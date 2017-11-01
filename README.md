@@ -7,7 +7,7 @@ Drupal development environment using Docker Compose
  - Webserver with Apache and PHP 5.6 through mod_php
  - Database with MySQL
  - Adminer for DB access through a UI
- - Mailcatcher for email debugging
+ - Mailhog for email debugging
  - Dev tools with SSH access for the latest command line development tools
  - Optionally Solr server
 

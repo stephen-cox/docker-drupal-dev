@@ -12,7 +12,7 @@ services:
     hostname: drupal
     links:
       - db:mysql
-      - mailcatcher
+      - mailhog
     ports:
       - "80:80"
       - "443:443"
@@ -34,12 +34,12 @@ services:
       - ./etc/mysql/my.cnf:/etc/mysql/conf.d/95-overrides.cnf
 
   # Email catcher
-  mailcatcher:
-    image: schickling/mailcatcher
-    hostname: mailcatcher
+  mailhog:
+    image: mailhog/mailhog
+    hostname: mailhog
     ports:
       - "1025:1025"
-      - "8081:1080"
+      - "8081:8025"
 
   # Web development tools
   web_tools:
@@ -47,7 +47,7 @@ services:
     hostname: web-tools
     links:
       - db:mysql
-      - mailcatcher
+      - mailhog
     ports:
       - "8080:80"
     volumes:
@@ -59,7 +59,7 @@ services:
     hostname: cli-tools
     links:
       - db:mysql
-      - mailcatcher
+      - mailhog
     ports:
       - "2222:22"
     volumes:
