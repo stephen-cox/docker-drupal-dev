@@ -23,7 +23,7 @@ services:
 
   # Database server
   db:
-    image: dockerdrupaldev/mysql:latest
+    image: dockerdrupaldev/mariadb:latest
     hostname: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root

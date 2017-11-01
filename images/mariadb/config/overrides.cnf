@@ -1,0 +1,6 @@
+##
+# Docker Drupal Development
+#
+# Override config
+
+[mysqld]
