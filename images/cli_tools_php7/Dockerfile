@@ -59,12 +59,12 @@ RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
     mv composer.phar /usr/local/bin/composer
 
 # Install Drush
-RUN wget http://files.drush.org/drush.phar && \
+RUN wget https://github.com/drush-ops/drush/releases/download/8.1.16/drush.phar && \
     chmod +x drush.phar && \
     mv drush.phar /usr/local/bin/drush
 
 # Install npm, gulp and bower
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install -y \
       nodejs && \
     npm install -g \

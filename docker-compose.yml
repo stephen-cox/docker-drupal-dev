@@ -39,7 +39,11 @@ services:
     hostname: mailhog
     ports:
       - "1025:1025"
-      - "8081:8025"
+      - "8025:8025"
+    labels:
+      - "traefik.backend=mailhog"
+      - 'traefik.port=8025'
+      - "traefik.frontend.rule=Host:mailhog.ddd.localhost"
 
   # Web development tools
   web_tools:
@@ -49,9 +53,13 @@ services:
       - db:mysql
       - mailhog
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       - apache_logs:/var/log/apache2
+    labels:
+      - "traefik.backend=web-tools"
+      - 'traefik.port=80'
+      - "traefik.frontend.rule=Host:web-tools.ddd.localhost"
 
   # CLI development tools with SSH
   cli_tools:
@@ -68,6 +76,29 @@ services:
       - ./sites:/var/www
       - /home/docker
       - apache_logs:/var/log/apache2
+
+  portainer:
+    image: portainer/portainer
+    hostname: portainer
+    command: --no-auth -H unix:///var/run/docker.sock
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - 'traefik.backend=portainer'
+      - 'traefik.port=9000'
+      - 'traefik.frontend.rule=Host:portainer.ddd.localhost'
+
+  traefik:
+    image: traefik
+    hostname: traefik
+    command: -c /dev/null --web --docker --docker.domain=ddd.localhost --logLevel=INFO
+    ports:
+      - '8000:80'
+      - '8080:8080'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   apache_logs: {}

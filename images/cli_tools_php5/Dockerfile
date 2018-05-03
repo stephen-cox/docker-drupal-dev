@@ -9,7 +9,10 @@ LABEL maintainer="web@stephencox.net"
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install packages
-RUN locale-gen en_US.UTF-8 && \
+RUN apt-get clean && \
+    apt-get update && \
+    apt-get install -y locales && \
+    locale-gen en_US.UTF-8 && \
     export LANG=en_US.UTF-8 && \
     apt-get update && \
     apt-get install -y software-properties-common && \
@@ -63,15 +66,14 @@ RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
     mv composer.phar /usr/local/bin/composer
 
 # Install Drush
-RUN wget http://files.drush.org/drush.phar && \
+RUN wget https://github.com/drush-ops/drush/releases/download/8.1.16/drush.phar && \
     chmod +x drush.phar && \
     mv drush.phar /usr/local/bin/drush
 
 # Install npm, gulp and bower
-RUN curl -sL https://deb.nodesource.com/setup_0.12 | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install -y \
-      nodejs \
-      npm && \
+      nodejs && \
     npm install -g \
       bower \
       gulp
